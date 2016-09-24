@@ -1,0 +1,55 @@
+body {
+    background: #eeeeee;
+}
+
+.menu li {
+    cursor: pointer;
+    list-style-type: none;
+}
+
+.menu li a {
+    display: inline-block;
+    width: 200px;
+    padding: 7px 5px;
+    background: #d4d4d4;
+    cursor: pointer;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    transition: .5s all;
+    color: dimgrey;
+}
+
+.menu li a:hover {
+    background: #e7e7e7;
+}
+
+.menu li.menu-open > a.title:before {
+    float: left;
+    content: "";
+    display: block;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid green;
+    margin-top: 3px;
+    margin-right: 5px;
+}
+
+.menu li a.title:before {
+    float: left;
+    content: "";
+    display: block;
+    border-top: 5px solid green;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    margin-top: 7px;
+    margin-right: 5px;
+}
+
+.menu ul li ul {
+    display: none;
+}
+
+.menu .menu-open > ul {
+    display: block;
+}
