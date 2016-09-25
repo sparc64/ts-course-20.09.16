@@ -1,25 +1,16 @@
 type oneElement ={title: string,items?: menuList};
 type menuList= oneElement[];
 
-// let menuList: menuList = [
-//     {
-//         title: 'JS',
-//         items: ['Angular',
-//             'React']
-//     },
-//     {
-//         title: 'Dart',
-//         items: ['Flutter',
-//             'Redstone']
-//     },
-// ];
-
 let menuList: menuList = [
     {
         title: 'Животные', items: [
         {
             title: 'Млекопитающие', items: [
-            {title: 'Коровы'},
+            {title: 'Коровы', items: [
+                {title: 'Бурые'},
+                {title: 'Чёрные'}
+            ]
+            },
             {title: 'Ослы'},
             {title: 'Собаки'},
             {title: 'Тигры'}
@@ -54,15 +45,13 @@ let menuList: menuList = [
 function generateMenu(list: menuList): string {
     let str: string = `<ul>`;
     for (let a of list) {
-
         if (a.items) {
             str += `<li><a class="title">${a.title}</a>`;
             str += generateMenu(a.items);
+            str += '</li>'
         } else {
             str += `<li><a>${a.title}</a></li>`;
         }
-
-        str += `</li>`;
     }
     str += `</ul>`;
     return str;
