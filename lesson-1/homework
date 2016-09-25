@@ -1,41 +1,45 @@
-Основываясь на примере который был показан на лекции
-Создайте функцию которая будет генерить меню любой вложенности + обработчик события для открывания/закрывания его
-Пример списка меню ниже.
-P.S. Очень важно что бы вложеность могла быть любой
+Based on example from the lesson
+build the function that generates multi-level menu + handler for opening/closing it
+Sample menu JSON is below
+P.S. It is important that number of levels not hard-coded and theoretically could be any
 
 menu = [
     {
-        title: 'Животные', items: [
+        title: 'Animals', items: [
         {
-            title: 'Млекопитающие', items: [
-            {title: 'Коровы'},
-            {title: 'Ослы'},
-            {title: 'Собаки'},
-            {title: 'Тигры'}
+            title: 'Mammals', items: [
+            {title: 'Cows', items: [
+                {title: 'Brown'},
+                {title: 'Black'}
+            ]
+            },
+            {title: 'Donkey'},
+            {title: 'Dogs'},
+            {title: 'Tigers'}
         ]
         },
         {
-            title: 'Другие', items: [
-            {title: 'Змеи'},
-            {title: 'Птицы'},
-            {title: 'Ящерицы'},
+            title: 'Other', items: [
+            {title: 'Snakes'},
+            {title: 'Birds'},
+            {title: 'Lizards'},
         ],
         },
     ]
     },
     {
-        title: 'Рыбы', items: [
+        title: 'Fishes', items: [
         {
-            title: 'Аквариумные', items: [
-            {title: 'Гуппи'},
-            {title: 'Скалярии'}
+            title: 'Aquarium', items: [
+            {title: 'Guppy'},
+            {title: 'Scalare'}
         ]
         },
         {
-            title: 'Форель', items: [
-            {title: 'Морская форель'}
+            title: 'Trout', items: [
+            {title: 'Salmon'}
         ]
         },
     ]
     }
-    ]
+];

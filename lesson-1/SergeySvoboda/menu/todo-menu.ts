@@ -3,39 +3,39 @@ type menuList= oneElement[];
 
 let menuList: menuList = [
     {
-        title: 'Животные', items: [
+        title: 'Animals', items: [
         {
-            title: 'Млекопитающие', items: [
-            {title: 'Коровы', items: [
-                {title: 'Бурые'},
-                {title: 'Чёрные'}
+            title: 'Mammals', items: [
+            {title: 'Cows', items: [
+                {title: 'Brown'},
+                {title: 'Black'}
             ]
             },
-            {title: 'Ослы'},
-            {title: 'Собаки'},
-            {title: 'Тигры'}
+            {title: 'Donkey'},
+            {title: 'Dogs'},
+            {title: 'Tigers'}
         ]
         },
         {
-            title: 'Другие', items: [
-            {title: 'Змеи'},
-            {title: 'Птицы'},
-            {title: 'Ящерицы'},
+            title: 'Other', items: [
+            {title: 'Snakes'},
+            {title: 'Birds'},
+            {title: 'Lizards'},
         ],
         },
     ]
     },
     {
-        title: 'Рыбы', items: [
+        title: 'Fishes', items: [
         {
-            title: 'Аквариумные', items: [
-            {title: 'Гуппи'},
-            {title: 'Скалярии'}
+            title: 'Aquarium', items: [
+            {title: 'Guppy'},
+            {title: 'Scalare'}
         ]
         },
         {
-            title: 'Форель', items: [
-            {title: 'Морская форель'}
+            title: 'Trout', items: [
+            {title: 'Salmon'}
         ]
         },
     ]
@@ -44,13 +44,13 @@ let menuList: menuList = [
 
 function generateMenu(list: menuList): string {
     let str: string = `<ul>`;
-    for (let a of list) {
-        if (a.items) {
-            str += `<li><a class="title">${a.title}</a>`;
-            str += generateMenu(a.items);
+    for (let elem of list) {
+        if (elem.items) {
+            str += `<li><a class="title">${elem.title}</a>`;
+            str += generateMenu(elem.items);
             str += '</li>'
         } else {
-            str += `<li><a>${a.title}</a></li>`;
+            str += `<li><a>${elem.title}</a></li>`;
         }
     }
     str += `</ul>`;
