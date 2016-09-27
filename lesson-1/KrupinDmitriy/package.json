@@ -1,8 +1,8 @@
 {
-  "name": "ts-course-20.09.16",
+  "name": "krupin",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "todo-menu.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
