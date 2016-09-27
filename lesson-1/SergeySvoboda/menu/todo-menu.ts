@@ -3,42 +3,50 @@ type menuList= oneElement[];
 
 let menuList: menuList = [
     {
-        title: 'Животные', items: [
-        {
-            title: 'Млекопитающие', items: [
-            {title: 'Коровы', items: [
-                {title: 'Бурые'},
-                {title: 'Чёрные'}
-            ]
+        title: 'Животные',
+        items: [
+            {
+                title: 'Млекопитающие',
+                items: [
+                    {
+                        title: 'Коровы',
+                        items: [
+                            {title: 'Бурые'},
+                            {title: 'Чёрные'}
+                        ]
+                    },
+                    {title: 'Ослы'},
+                    {title: 'Собаки'},
+                    {title: 'Тигры'}
+                ]
             },
-            {title: 'Ослы'},
-            {title: 'Собаки'},
-            {title: 'Тигры'}
+            {
+                title: 'Другие',
+                items: [
+                    {title: 'Змеи'},
+                    {title: 'Птицы'},
+                    {title: 'Ящерицы'},
+                ],
+            },
         ]
-        },
-        {
-            title: 'Другие', items: [
-            {title: 'Змеи'},
-            {title: 'Птицы'},
-            {title: 'Ящерицы'},
-        ],
-        },
-    ]
     },
     {
-        title: 'Рыбы', items: [
-        {
-            title: 'Аквариумные', items: [
-            {title: 'Гуппи'},
-            {title: 'Скалярии'}
+        title: 'Рыбы',
+        items: [
+            {
+                title: 'Аквариумные',
+                items: [
+                    {title: 'Гуппи'},
+                    {title: 'Скалярии'}
+                ]
+            },
+            {
+                title: 'Форель',
+                items: [
+                    {title: 'Морская форель'}
+                ]
+            },
         ]
-        },
-        {
-            title: 'Форель', items: [
-            {title: 'Морская форель'}
-        ]
-        },
-    ]
     }
 ];
 
@@ -49,9 +57,10 @@ function generateMenu(list: menuList): string {
             str += `<li><a class="title">${a.title}</a>`;
             str += generateMenu(a.items);
             str += '</li>'
-        } else {
-            str += `<li><a>${a.title}</a></li>`;
+            continue;
         }
+        str += `<li><a>${a.title}</a></li>`;
+
     }
     str += `</ul>`;
     return str;

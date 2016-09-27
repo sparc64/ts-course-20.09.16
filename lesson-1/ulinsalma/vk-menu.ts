@@ -8,51 +8,66 @@
 type oneObj ={title: string, items?: oneObj[]};
 type itemList = oneObj[];
 
-let menu:itemList = [
+let menu: itemList = [
     {
-        title: 'Животные', items: [
-        {
-            title: 'Млекопитающие', items: [
-                {title: 'Коровы'},
-                {title: 'Ослы',
-                    items:[{title:'весёлые'},
-                        {title:'грустные',
-                            items:[{title:'лопоухие'},
-                                {title:'без хвоста',
-                                    items:[{title:'кареглазые'},{title:'синеухие'},{title:'рыжие'}]}]}]},
-                {title: 'Собаки'},
-                {title: 'Тигры'}
-            ]
-        },
-        {
-            title: 'Другие', items: [
-                {title: 'Змеи'},
-                {title: 'Птицы'},
-                {title: 'Ящерицы', items:[{title:'большие'},{title:'маленькие'}]}
-            ]
-        }
-    ]
+        title: 'Животные',
+        items: [
+            {
+                title: 'Млекопитающие',
+                items: [
+                    {title: 'Коровы'},
+                    {
+                        title: 'Ослы',
+                        items: [{title: 'весёлые'},
+                            {
+                                title: 'грустные',
+                                items: [{title: 'лопоухие'},
+                                    {
+                                        title: 'без хвоста',
+                                        items: [{title: 'кареглазые'}, {title: 'синеухие'}, {title: 'рыжие'}]
+                                    }]
+                            }]
+                    },
+                    {title: 'Собаки'},
+                    {title: 'Тигры'}
+                ]
+            },
+            {
+                title: 'Другие',
+                items: [
+                    {title: 'Змеи'},
+                    {title: 'Птицы'},
+                    {
+                        title: 'Ящерицы',
+                        items: [{title: 'большие'}, {title: 'маленькие'}]
+                    }
+                ]
+            }
+        ]
     },
     {
-        title: 'Рыбы', items: [
-        {
-            title: 'Аквариумные', items: [
-                {title: 'Гуппи'},
-                {title: 'Скалярии'}
-            ]
-        },
-        {
-            title: 'Форель', items: [
-                {title: 'Морская форель'}
-            ]
-        }
-    ]
+        title: 'Рыбы',
+        items: [
+            {
+                title: 'Аквариумные',
+                items: [
+                    {title: 'Гуппи'},
+                    {title: 'Скалярии'}
+                ]
+            },
+            {
+                title: 'Форель',
+                items: [
+                    {title: 'Морская форель'}
+                ]
+            }
+        ]
     }
 ];
 
 function createMenu(list: itemList): string {
     // создание меню
-    let arr = [];
+    let arr: string[] = [];
     arr.push('<ul>');
     for (let a of list) {
         addLi(a, arr);
@@ -66,24 +81,26 @@ function createMenu(list: itemList): string {
     return arr.join("");
 }
 
-function addLi(obj:oneObj, arr:string[]):void {
+function addLi(obj: oneObj, arr: string[]): void {
     // добавление одного li
-    if ( obj.items ) {
+    if (obj.items) {
         arr.push(`<li><a class="title">${obj.title}</a><ul>`);
-    }else {
-        arr.push(`<li><a>${obj.title}</a></li>`);
+        return;
     }
+    arr.push(`<li><a>${obj.title}</a></li>`);
+
 }
 
-let createObj = function _me_(obj:oneObj, arr:string[]):void {
+let createObj = function _me_(obj: oneObj, arr: string[]): void {
     // создание пункта меню из объекта oneObj
     addLi(obj, arr);
-    if (obj.items) {
-        for (let a of obj.items) {
-            _me_(a, arr);
-        }
-        arr.push('</ul></li>');
+    if (!obj.items) {
+       return;
     }
+    for (let a of obj.items) {
+        _me_(a, arr);
+    }
+    arr.push('</ul></li>');
 }
 
 let navMenu = document.querySelector(".menu") as HTMLElement;

@@ -44,7 +44,7 @@ function generateMenu(list: menuItem[]): string {
     str += `<li>`;
 
     if (a.items && a.items.length) {
-      str += `<a class="title">${a.title}</a>` + generateMenu(a.items);
+      str += `<a class="title">${a.title}</a>${generateMenu(a.items)}`;
     } else {
       str += `<span class="leaf">${a.title}</span>`;
     }

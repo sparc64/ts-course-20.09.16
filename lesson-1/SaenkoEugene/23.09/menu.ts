@@ -51,7 +51,7 @@ let constructMenu = (menuEl: menuType): string => {
 
         templateStr += `<a ${item.items ? 'class="title"' : ''}>${item.title}</a>${item.items ? constructMenu(item.items) : ''}`;
 
-        templateStr += '</li>';
+        templateStr += `</li>`;
     }
 
     templateStr += '</ul>';

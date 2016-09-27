@@ -51,7 +51,7 @@ let nav: nav = [
 function initNav(nav: nav): string {
     function generateNav(nav: nav) {
         let navHTML: string = `<ul class="nav">`;
-        for (let navItem: navItem of nav) {
+        for (let navItem of nav) {
             navHTML += `<li class="nav-item${navItem.items ? ' nav-inner' : ''}"><a class="nav-link">${navItem.title}</a>`;
             if (navItem.items) navHTML += generateNav(navItem.items);
         }
