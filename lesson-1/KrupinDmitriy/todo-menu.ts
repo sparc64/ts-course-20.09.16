@@ -5,50 +5,50 @@ type menuList= oneElement[];
 let menuList: menuList = [
     {
         title: 'Животные', items: [
-        {
-            title: 'Млекопитающие', items: [
-            {title: 'Коровы'},
-            {title: 'Ослы'},
-            {title: 'Собаки'},
-            {title: 'Тигры'}
+            {
+                title: 'Млекопитающие', items: [
+                    { title: 'Коровы' },
+                    { title: 'Ослы' },
+                    { title: 'Собаки' },
+                    { title: 'Тигры' }
+                ]
+            },
+            {
+                title: 'Другие', items: [
+                    { title: 'Змеи' },
+                    { title: 'Птицы' },
+                    { title: 'Ящерицы' },
+                ],
+            },
         ]
-        },
-        {
-            title: 'Другие', items: [
-            {title: 'Змеи'},
-            {title: 'Птицы'},
-            {title: 'Ящерицы'},
-        ],
-        },
-    ]
     },
     {
         title: 'Рыбы', items: [
-        {
-            title: 'Аквариумные', items: [
-            {title: 'Гуппи'},
-            {title: 'Скалярии'}
+            {
+                title: 'Аквариумные', items: [
+                    { title: 'Гуппи' },
+                    { title: 'Скалярии' }
+                ]
+            },
+            {
+                title: 'Форель', items: [
+                    { title: 'Морская форель' }
+                ]
+            },
         ]
-        },
-        {
-            title: 'Форель', items: [
-            {title: 'Морская форель'}
-        ]
-        },
-    ]
     }
 ];
 
 function generateMenu(list: menuList): string {
     let str: string = `<ul>`;
     for (let a of list) {
-        if(a.title && a.items){
+        if (a.title && a.items) {
             str += `<li><a class="title">${a.title}</a>`;
         } else {
             str += `<li><a>${a.title}</a>`;
         }
-	    if (a.items){
-        	str += generateMenu(a.items);
+        if (a.items) {
+            str += generateMenu(a.items);
         }
         str += `</li>`
     }
