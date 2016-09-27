@@ -1,30 +1,59 @@
-
-type oneElement ={title: string,items: string[]}
-type menuList= oneElement[];
+type oneElement = { title: string, items?: oneElement[] };
+type menuList = oneElement[];
 
 let menuList: menuList = [
     {
-        title: 'JS',
-        items: ['Angular',
-            'React']
+        title: 'Животные', items: [
+        {
+            title: 'Млекопитающие', items: [
+            { title: 'Коровы' },
+            { title: 'Ослы' },
+            { title: 'Собаки' },
+            { title: 'Тигры' }
+        ]
+        },
+        {
+            title: 'Другие', items: [
+            { title: 'Змеи' },
+            { title: 'Птицы' },
+            { title: 'Ящерицы' },
+        ],
+        }
+    ]
     },
     {
-        title: 'Dart',
-        items: ['Flutter',
-            'Redstone']
-    },
+        title: 'Рыбы', items: [
+        {
+            title: 'Аквариумные', items: [
+            { title: 'Гуппи'},
+            { title: 'Скалярии' }
+        ]
+        },
+        {
+            title: 'Форель', items: [
+            { title: 'Морская форель' }
+        ]
+        }
+    ]
+    }
 ];
 
 function generateMenu(list: menuList): string {
-    let str: string = `<ul>`;
+    let str: string = '<ul>';
+
     for (let a of list) {
-        str += `<li><a class="title">${a.title}</a><ul>`;
-        for (let item of a.items) {
-            str += `<li><a>${item}</a></li>`
+
+        str += `<li><a class="title">${a.title}</a>`;
+
+        if(a.items) {
+            str += generateMenu(a.items)
         }
-        str += `</li></ul>`
+
+        str += '</li>';
     }
-    str += `</ul>`;
+
+    str += '</ul>';
+
     return str;
 }
 
@@ -38,4 +67,4 @@ navMenuList.onclick = (ev: MouseEvent) => {
     }
     let parentLi = el.parentNode as HTMLLIElement;
     parentLi.classList.toggle("menu-open")
-}
+};
