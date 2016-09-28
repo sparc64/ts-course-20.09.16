@@ -232,3 +232,27 @@
 //         v.x = 'asd';
 //     }
 // }
+/***/
+
+// let a:1 | 2 | 3;
+// a = 4;
+
+// interface UIElement {
+//     addClick(click: (this: void, e: Event) => void): void
+// }
+// //
+// class UElement implements UIElement{
+//     addClick(click: (this: void, e: Event) => void): void{
+//
+//     }
+// }
+// class Handler {
+//     info: string;
+//     onClickBad(this: void, e: Event) {
+//         // oops, used this here. using this callback would crash at runtime
+//        // this.info = 'e.message';
+//     };
+// }
+//  let handler:Handler = new Handler();
+//  let uiElement:UElement = new UElement();
+//  uiElement.addClick(handler.onClickBad); // error!

@@ -1,20 +1,16 @@
-type oneElement ={title: string,items?: menuList};
-type menuList= oneElement[];
+type menuElement = {
+    title: string,
+    items?: menuElement[]
+};
 
-let menuList: menuList = [
+const menu = [
     {
         title: 'Животные',
         items: [
             {
                 title: 'Млекопитающие',
                 items: [
-                    {
-                        title: 'Коровы',
-                        items: [
-                            {title: 'Бурые'},
-                            {title: 'Чёрные'}
-                        ]
-                    },
+                    {title: 'Коровы'},
                     {title: 'Ослы'},
                     {title: 'Собаки'},
                     {title: 'Тигры'}
@@ -50,24 +46,22 @@ let menuList: menuList = [
     }
 ];
 
-function generateMenu(list: menuList): string {
+
+function generateMenu(list: menuElement[]): string {
     let str: string = `<ul>`;
     for (let a of list) {
+        str += `<li><a class="title">${a.title}</a>`;
         if (a.items) {
-            str += `<li><a class="title">${a.title}</a>`;
             str += generateMenu(a.items);
-            str += '</li>'
-            continue;
         }
-        str += `<li><a>${a.title}</a></li>`;
-
+        str += `</li>`
     }
     str += `</ul>`;
     return str;
 }
 
 let navMenuList = document.querySelector(".menu") as HTMLElement;
-navMenuList.innerHTML = generateMenu(menuList);
+navMenuList.innerHTML = generateMenu(menu);
 navMenuList.onclick = (ev: MouseEvent) => {
     let el = ev.target as HTMLElement;
     let classList = el.classList;
@@ -75,5 +69,5 @@ navMenuList.onclick = (ev: MouseEvent) => {
         return;
     }
     let parentLi = el.parentNode as HTMLLIElement;
-    parentLi.classList.toggle("menu-open");
-}
+    parentLi.classList.toggle("menu-open")
+};

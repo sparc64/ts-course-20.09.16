@@ -1,18 +1,18 @@
-type oneElement ={title: string,items?: menuList};
-type menuList= oneElement[];
+'use strict';
+
+type oneElement = {title: string, items?: oneElement[]};
+type menuList = oneElement[];
 
 let menuList: menuList = [
+
     {
-        title: 'Животные',
-        items: [
+        title: 'Животные', items: [
             {
-                title: 'Млекопитающие',
-                items: [
+                title: 'Млекопитающие', items: [
                     {
-                        title: 'Коровы',
-                        items: [
-                            {title: 'Бурые'},
-                            {title: 'Чёрные'}
+                        title: 'Коровы', items: [
+                            {title:'Серые'},
+                            {title:'Белые'}
                         ]
                     },
                     {title: 'Ослы'},
@@ -21,8 +21,7 @@ let menuList: menuList = [
                 ]
             },
             {
-                title: 'Другие',
-                items: [
+                title: 'Другие', items: [
                     {title: 'Змеи'},
                     {title: 'Птицы'},
                     {title: 'Ящерицы'},
@@ -31,18 +30,15 @@ let menuList: menuList = [
         ]
     },
     {
-        title: 'Рыбы',
-        items: [
+        title: 'Рыбы', items: [
             {
-                title: 'Аквариумные',
-                items: [
+                title: 'Аквариумные', items: [
                     {title: 'Гуппи'},
                     {title: 'Скалярии'}
                 ]
             },
             {
-                title: 'Форель',
-                items: [
+                title: 'Форель', items: [
                     {title: 'Морская форель'}
                 ]
             },
@@ -50,18 +46,28 @@ let menuList: menuList = [
     }
 ];
 
-function generateMenu(list: menuList): string {
+function generateMenu(list: menuList): any {
+
+
     let str: string = `<ul>`;
     for (let a of list) {
-        if (a.items) {
-            str += `<li><a class="title">${a.title}</a>`;
-            str += generateMenu(a.items);
-            str += '</li>'
-            continue;
-        }
-        str += `<li><a>${a.title}</a></li>`;
 
+        (function func1(a) {
+
+            if (a.items) {
+
+                str += `<li><a class="title">${a.title}</a><ul>`;
+                for (let b of a.items) {
+                    func1(b);
+                }
+                str += `</ul></li>`
+            } else {
+                str += `<li><a class="title">${a.title}</a></li>`;
+            }
+
+        })(a)
     }
+
     str += `</ul>`;
     return str;
 }
@@ -75,5 +81,5 @@ navMenuList.onclick = (ev: MouseEvent) => {
         return;
     }
     let parentLi = el.parentNode as HTMLLIElement;
-    parentLi.classList.toggle("menu-open");
+    parentLi.classList.toggle("menu-open")
 }
