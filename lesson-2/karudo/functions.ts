@@ -43,9 +43,9 @@ console.log(
 );
 
 
-// 4) letterReverse
-function letterReverse(string: string): string {
-    const reversedArrs: Array<Array<string>> = string
+// 4) reverse
+function reverse(str: string): string {
+    const reversedArrs: Array<Array<string>> = str
         .replace(/[^a-z ]/gi, '')
         .split(/\s+/)
         .map(word => word.split('').reverse());
@@ -53,7 +53,7 @@ function letterReverse(string: string): string {
     const letters: string[] = [].concat(...reversedArrs);
 
     let c = 0;
-    return string.split('').map(s => {
+    return str.split('').map(s => {
         if (/[a-z]/i.test(s)) {
             return letters[c++];
         }
@@ -62,9 +62,9 @@ function letterReverse(string: string): string {
 }
 
 console.log(
-    'letterReverse',
-    `"${letterReverse('s1tar3t 2 hellow')}"`,
-    `'${letterReverse('s1ta$%r3t 2 hel^low')}"`,
-    `"${letterReverse('s1tar3t 2   low5')}"`
+    'reverse',
+    `"${reverse('s1tar3t 2 hellow')}"`,
+    `'${reverse('s1ta$%r3t 2 hel^low')}"`,
+    `"${reverse('s1tar3t 2   low5')}"`
 );
 
