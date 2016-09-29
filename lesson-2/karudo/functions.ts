@@ -44,8 +44,21 @@ console.log(
 
 
 // 4) letterReverse
-function letterReverse(str: string): string {
-    return str.replace(/[a-z]+/gi, s => s.split('').reverse().join(''));
+function letterReverse(string: string): string {
+    const reversedArrs: Array<Array<string>> = string
+        .replace(/[^a-z ]/g, '')
+        .split(/\s+/)
+        .map(word => word.split('').reverse());
+
+    const letters: string[] = [].concat(...reversedArrs);
+
+    let c = 0;
+    return string.split('').map(s => {
+        if (/[a-z]/i.test(s)) {
+            return letters[c++];
+        }
+        return s;
+    }).join('');
 }
 
 console.log(
