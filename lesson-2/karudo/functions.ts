@@ -46,7 +46,7 @@ console.log(
 // 4) letterReverse
 function letterReverse(string: string): string {
     const reversedArrs: Array<Array<string>> = string
-        .replace(/[^a-z ]/g, '')
+        .replace(/[^a-z ]/gi, '')
         .split(/\s+/)
         .map(word => word.split('').reverse());
 
