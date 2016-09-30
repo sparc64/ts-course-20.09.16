@@ -27,10 +27,9 @@ class ArrayHelper {
     public getUnique<T>(...arr: T[]): T[] {
         let cached: T[] = [];
         for (let item of arr) {
-            if (cached.indexOf(item) !== -1) {
-                continue;
+            if (cached.indexOf(item) == -1) {
+                cached.push(item);
             }
-            cached.push(item);
         }
         return cached;
     }
