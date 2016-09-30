@@ -106,3 +106,4 @@ class HelperFunctions {
         return result.join('') as string;
     }
 }
+
