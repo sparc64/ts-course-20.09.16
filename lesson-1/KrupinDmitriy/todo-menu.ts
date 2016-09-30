@@ -47,15 +47,7 @@ let menuList: menuList = [
 function generateMenu(list: menuList): string {
     let str: string = `<ul>`;
     for (let a of list) {
-        if (a.title && a.items) {
-            str += `<li><a class="title">${a.title}</a>`;
-        } else {
-            str += `<li><a>${a.title}</a>`;
-        }
-        if (a.items) {
-            str += generateMenu(a.items);
-        }
-        str += `</li>`
+        str += `<li><a ${a.items ? 'class="title"' : ''}>${a.title}</a>${a.items ? generateMenu(a.items) : ''}</li>`;
     }
     str += `</ul>`;
     return str;
