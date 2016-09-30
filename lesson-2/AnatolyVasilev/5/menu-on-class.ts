@@ -117,10 +117,21 @@ let menuList: menuList = [
     }
 ];
 
-let element = document.querySelector('.menu') as HTMLElement;
+let element: HTMLElement = document.querySelector('.menu') as HTMLElement;
 
-let menuInst = new Menu({element, menuList});
+let menuInst: Menu = new Menu({element, menuList});
 
-menuInst.open('Млекопитающие');
-menuInst.close('Млекопитающие');
-menuInst.toggle('Млекопитающие');
+let openAnimalsButton: HTMLElement = document.getElementById('open_animals') as HTMLElement;
+openAnimalsButton.onclick = (event: MouseEvent): void=>{
+    menuInst.open('Животные');
+};
+
+let toggleAnimalsButton: HTMLElement = document.getElementById('toggle_animals') as HTMLElement;
+toggleAnimalsButton.onclick = (event: MouseEvent): void=>{
+    menuInst.toggle('Млекопитающие');
+};
+
+let closeAnimalsButton: HTMLElement = document.getElementById('close_animals') as HTMLElement;
+closeAnimalsButton.onclick = (event: MouseEvent): void=>{
+    menuInst.close('Животные');
+};
