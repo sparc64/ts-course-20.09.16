@@ -66,16 +66,16 @@ class ArrayHelper {
 
 let helper = new ArrayHelper();
 
-console.log(helper.isInArray([1, 5, 6, 8], 1, 2));
-console.log(helper.isInArray([1, 5, 6, 8], 1, 5));
+console.log(helper.isInArray([1, 5, 6], 1, 2)); // false
+console.log(helper.isInArray([1, 5, 6], 1, 5)); // true
 
-console.log(helper.summator(1, 2, 3, 4));
-console.log(helper.summator(`a`, `b`, `c`, `d`));
+console.log(helper.summator(1, 2, 3, 4)); // 10
+console.log(helper.summator(`a`, `b`, `c`)); // abc
 
-console.log(helper.getUnique<string>(`a`, `b`, `b`, `c`, `c`, `d`, `d`, `r`, `r`));
-console.log(helper.getUnique<number>(1, 2, 2, 3, 3, 4, 4, 5, 5));
+console.log(helper.getUnique<string>(`a`, `b`, `b`, `c`, `c`)); // ["a", "b", "c"]
+console.log(helper.getUnique<number>(1, 2, 2, 3, 3)); // [1, 2, 3]
 
-console.log(' s1tar3t 2 hellow\n', helper.revers(`s1tar3t 2 hellow`), '\n t1rat3s 2 wolleh');
-console.log(' s1ta$%r3t 2 hel^low\n', helper.revers(`s1ta$%r3t 2 hel^low`), '\n t1ra$%t3s 2 wol^leh');
-console.log(' s1tar3t 2   low5\n', helper.revers(`s1tar3t 2   low5`), '\n t1rat3s 2   wol5');
+console.log(helper.revers(`s1tar3t 2 hellow`)); // t1rat3s 2 wolleh'
+console.log(helper.revers(`s1ta$%r3t 2 hel^low`)); // t1ra$%t3s 2 wol^leh
+console.log(helper.revers(`s1tar3t 2   low5`)); // t1rat3s 2   wol5
 

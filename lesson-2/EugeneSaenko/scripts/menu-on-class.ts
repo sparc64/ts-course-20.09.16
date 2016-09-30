@@ -1,19 +1,19 @@
 type menuList = { title: string, items?: menuList}[];
-
-type menuOpt = {element: HTMLElement, controls: HTMLDivElement, menuList: menuList}
-
+type menuOpt = {element: HTMLElement, select: HTMLSelectElement, controls: HTMLDivElement, menuList: menuList}
 
 class Menu {
     protected _element: HTMLElement;
+    protected _select: HTMLSelectElement;
     protected _controls: HTMLDivElement;
     protected _menuList: menuList;
 
     public constructor(opt: menuOpt) {
         this._element = opt.element;
         this._menuList = opt.menuList;
+        this._select = opt.select;
         this._controls = opt.controls;
         this._element.innerHTML = this._generateMenu(this._menuList);
-        this._controls.innerHTML = this._generateControls();
+        this._select.innerHTML = this._generateSelect();
         this._bindEvents();
     }
 
@@ -21,24 +21,39 @@ class Menu {
         return this._element;
     }
 
-    protected _bindEvents() {
+    protected _bindEvents(): void {
         this._element.addEventListener('click', this._clickHandler.bind(this));
-        // this._controls.addEventListener('change', this._openMenu);
+        this._controls.addEventListener('click', this._control.bind(this));
     }
 
     protected _clickHandler(ev: MouseEvent): void {
         let element = ev.target as HTMLElement;
-        let parentClass = element.parentElement.classList;
-        let elClass = element.classList;
-
-        this._toggleMenu(elClass, parentClass);
+        this._toggleMenu(element.classList, element.parentElement.classList);
     }
 
-    protected _optionChange(event) {
-        let target = event.target as HTMLElement;
+    protected _control(event: MouseEvent): void {
+        let target = event.target as HTMLElement,
+            className = target.className,
+            selected = document.querySelector(`#select`) as HTMLSelectElement,
+            el = document.querySelector(`a[data-name=${selected.value}]`) as HTMLElement;
+
+        this._actionMenu(className, el.classList, el.parentElement.classList);
     }
 
-    protected _toggleMenu(elClassList, parentClass) {
+    protected _actionMenu(action: string, elClassList, parentClassList): void {
+        if (!elClassList.contains('title')) {
+            return;
+        }
+        if (action == 'open') {
+            this._openMenu(elClassList, parentClassList);
+        } else if (action == 'close') {
+            this._closeMenu(elClassList, parentClassList);
+        } else if (action == 'toggle') {
+            this._toggleMenu(elClassList, parentClassList)
+        }
+    }
+
+    protected _toggleMenu(elClassList, parentClass): void {
         if (parentClass.contains('menu-open')) {
             this._closeMenu(elClassList, parentClass)
         } else {
@@ -46,46 +61,42 @@ class Menu {
         }
     }
 
-    protected _openMenu(elClassList, parentClass): void {
+    protected _openMenu(elClassList, parentClassList): void {
         if (!elClassList.contains('title')) {
             return;
         }
-        parentClass.add('menu-open')
+        parentClassList.add('menu-open')
     }
 
-    protected _closeMenu(elClassList, parentClass): void {
+    protected _closeMenu(elClassList, parentClassList): void {
         if (!elClassList.contains('title')) {
             return;
         }
-        parentClass.remove('menu-open')
+        parentClassList.remove('menu-open')
     }
 
     protected _generateMenu(menuList: menuList): string {
-        let z: string = `<ul>`;
+        let menuHtml: string = `<ul>`;
         for (let a of menuList) {
-            z += `<li><a ${a.items ? `class="title" data-name="${a.title}"` : ''}>${a.title}</a>`;
+            menuHtml += `<li><a ${a.items ? `class="title" data-name="${a.title}"` : ''}>${a.title}</a>`;
             if (!a.items) {
-                z += `</li>`;
+                menuHtml += `</li>`;
                 continue;
             }
-            z += `${this._generateMenu(a.items)}</li>`
+            menuHtml += `${this._generateMenu(a.items)}</li>`
         }
-        z += `</ul>`;
-        return z
+        menuHtml += `</ul>`;
+        return menuHtml
     }
 
-    protected _generateControls(): string {
+    protected _generateSelect(): string {
         let controls = document.querySelectorAll('.title') as any;
 
-        let html: string = Array.prototype.reduce.call(controls, (previousValue, currentItem) => {
+        return Array.prototype.reduce.call(controls, (previousValue, currentItem) => {
             return previousValue + `<option value="${currentItem.outerText}">${currentItem.outerText}</option>`
         });
-        console.log(html);
-
-        return html;
     }
 }
-
 
 let menuList: menuList = [
     {
@@ -131,6 +142,9 @@ let menuList: menuList = [
 ];
 
 let element = document.querySelector('.menu') as HTMLElement;
-let controls = document.querySelector('#controls') as HTMLDivElement;
+let select = document.querySelector('#select') as HTMLSelectElement;
+let controls = document.querySelector('.controls') as HTMLDivElement;
 
-let menuInst = new Menu({element, controls, menuList});
+let menuInst = new Menu({element, select, controls, menuList});
+
+console.log(menuInst.getElem);
