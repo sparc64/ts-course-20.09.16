@@ -10,5 +10,12 @@
 
 </nav>
 <script src="menu-on-class.js"></script>
+<hr>
+<h3>Демонстрация методов</h3>
+
+<button onclick="console.log(menuInst.getElem());">getElem (смотреть в консоль)</button>
+<button onclick="menuInst.toggle(document.getElementsByClassName('title')[0].parentElement);">toggle (0-й элемент)</button>
+<button onclick="menuInst.open(document.getElementsByClassName('title')[0].parentElement);">open (0-й элемент)</button>
+<button onclick="menuInst.close(document.getElementsByClassName('title')[0].parentElement);">close (0-й элемент)</button>
 </body>
 </html>

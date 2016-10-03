@@ -1,6 +1,8 @@
+.gitignore
 .idea
 node_modules
 **/*.js
 **/*.map
 .vscode
 .project
+.DS_Store
