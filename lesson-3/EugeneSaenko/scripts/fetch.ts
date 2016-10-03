@@ -6,7 +6,6 @@
  * apiKey: '7fbc4d0fd04492d32fa9a2f718c6293e'
  */
 
-
 interface InitRequest {
     method: string;
     mode: string;
