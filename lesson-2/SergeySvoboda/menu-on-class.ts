@@ -1,9 +1,10 @@
 // 1)
 
 type basicTypeElem = number | string | boolean;
-type basicTypeArray = basicTypeElem[];
 
-function isInArray(arr: basicTypeArray, ...elems: basicTypeArray): boolean {    
+function isInArray<T extends basicTypeElem>(arr: T[], ...elems: T[]): boolean {    
+    return elems.every( (v) => !!~arr.indexOf(v) );
+/*    
     nextElem:
     for (let e of elems) {
         for (let a of arr) {
@@ -12,57 +13,122 @@ function isInArray(arr: basicTypeArray, ...elems: basicTypeArray): boolean {
         return false;
     }
     return true;
+*/
+/*
+    for (let e of elems) {
+        if ( ~arr.indexOf(e) ) continue;
+        return false;
+    }
+    return true;
+*/
 }
 
-// console.log(isInArray([1,'test', 'other', 10, true, -20], 1, 'test', true, -20));
+// console.log(isInArray<number|string>(['test', 'other', 10, -20, 0], 'test', -20, 0));
 
 //====================================================== 
 
 // 2)
 
 function summator(...values: (number|string)[]): number {
+    return values.reduce( (sum:number, value) => sum + parseFloat(value) || 0, 0) as number;
+
+/*    
     let sum: number = 0;
 
     for (let v of values) {
-        if (typeof v !== 'number') {
+        if (typeof v == 'string') {
             v = parseFloat(v);
+            if ( isNaN(v) ) {
+                continue;
+            }
         }
-        sum += v;
+        sum+=v;
     }
     return sum;
+*/
 }
 
 
-//console.log(summator('10', 10, 60, '5.5', 4.5, '10slfjslf'));
+// console.log(summator('10', 10, 60, '5.5', 4.5, '10slfjslf'));
 
 //====================================================== 
 
 // 3)
 
-type arrayOfAny = any[];
-
 // Objects and arrays are considered as unique by default
-function getUnique(...values: arrayOfAny): arrayOfAny {
-    let arr: arrayOfAny = [];
+function getUnique<T>(...values: T[]): T[] {
+    return values.filter( (v, i, arr) => arr.indexOf(v) === i );
 
-    for (v of values) {
-        if ( existInArray(v, arr) ) continue;
+/*    
+    let arr:T[] = [];
+
+    for (let v of values) {
+        if ( ~arr.indexOf(v) ) continue;
         arr.push(v);
     }
     return arr;
-
-    // helper function
-    function existInArray(elem:any, arr: arrayOfAny): boolean {
-        for (a of arr) {
-            if (a === elem) return true;
-        }
-        return false;
-    }
+*/
 }
 
-// console.log(getUnique(1,1,1,20,'test', 'test', 'second test', true, false, true, [1,1,1], [1,1,1], [], {}, {} ));
+// console.log(getUnique<any>(1,1,1,20,'test', 'test', 'second test', true, false, true, [1,1,1], [1,1,1], [], {}, {} ));
 
 //====================================================== 
+
+// 4)
+
+function complexReverse(str: string): string {
+    let words: string[] = str.split(' ');
+    let result: string[] = [];
+
+    for (let w of words) {
+        result.push( reverseTheWord(w) );
+    }
+    return result.join(' ')
+
+    // helper functions
+    function reverseTheWord(str: string): string {
+        let letters: string[] = str.split('');
+        let result: string[] = [];
+
+        let i: number = 0;
+        let j: number = letters.length;
+
+        while (i < j) {
+            let left: string = letters[i];
+            let right: string = letters[j];
+
+            if ( !isLetter(left) ) {
+                i++;
+                continue;
+            }
+            if ( !isLetter(right) ) {
+                j--;
+                continue;
+            }
+
+            result[i] = right;
+            result[j] = left;
+        }
+
+        return result.join('');
+    }
+
+    function isLetter(l: string): boolean {
+
+    }
+
+}
+
+
+// let s1 = 's1tar3t 2 hellow';
+// let s2 = 's1ta$%r3t 2 hel^low';
+// let s3 = 's1tar3t 2   low5';
+// console.log(s1, ' -> ', revertSentence(s1));
+// console.log(s2, ' -> ', revertSentence(s2));
+// console.log(s3, ' -> ', revertSentence(s3));
+
+//====================================================== 
+
 
 type menuList = { title: string, items?: menuList}[];
 
