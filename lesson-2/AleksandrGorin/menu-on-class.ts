@@ -1,18 +1,42 @@
 type menuList = { title: string, items?: menuList}[];
-
 type menuOpt = {element: HTMLElement,menuList: menuList}
 
+interface IMenu {
+    getElem():HTMLElement;
+    toggle(item:HTMLElement):void;
+    open(item:HTMLElement):void;
+    close(item:HTMLElement):void;
+}
 
-class Menu {
-    protected _element: HTMLElement;
-    protected _menuList: menuList;
+class Menu implements IMenu {
 
     public constructor(opt: menuOpt) {
         this._element = opt.element;
         this._menuList = opt.menuList;
         this._element.innerHTML = this._generateMenu(this._menuList);
-        this._element.addEventListener('click', this._clickHandler)
+        this._element.addEventListener('click', this._clickHandler);
     }
+
+    public getElem() {
+        return this._element;
+    }
+
+    public toggle(item) {
+        item.classList.toggle('menu-open');
+    }
+
+    public open(item) {
+        item.classList.add('menu-open');
+    }
+
+    public close(item) {
+        item.classList.remove('menu-open');
+    }
+
+    protected _element: HTMLElement;
+    protected _menuList: menuList;
+
+
 
     protected _clickHandler(ev: MouseEvent): void {
         let element = ev.target as HTMLElement;
