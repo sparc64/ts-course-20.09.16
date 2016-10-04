@@ -1,36 +1,28 @@
+type primitive = string|number|boolean;
+
 class ArrayHelper {
-    public isInArray(main: any[], ...rest: any[]): boolean {
-        for (let item of rest) {
-            if (main.indexOf(item) == -1) {
-                return false;
-            }
-        }
-        return true;
+    public isInArray(main: primitive[], ...rest: primitive[]): boolean {
+        return rest.every((value) => {
+            return main.indexOf(value) !== -1
+        });
     }
 
-    public summator(...rest: string[]): string;
-    public summator(...rest: number[]): number;
-    public summator(...rest: any[]): any {
-        let sum: string|number = 0;
-
-        if (typeof rest[0] == `string`) {
-            sum = ``;
-        }
-
-        for (let item of rest) {
-            sum += item;
-        }
-
-        return sum;
+    public summator(...rest: (string|number)[]): number {
+        return rest.reduce<number>((sum, val) => {
+            if (typeof val === 'string') {
+                val = parseFloat(val);
+            }
+            return sum + val;
+        }, 0);
     }
 
     public getUnique<T>(...arr: T[]): T[] {
         let cached: T[] = [];
-        for (let item of arr) {
-            if (cached.indexOf(item) == -1) {
-                cached.push(item);
-            }
-        }
+
+        arr.forEach((value) => {
+            return cached.indexOf(value) === -1 ? cached.push(value) : false;
+        });
+
         return cached;
     }
 
@@ -68,8 +60,7 @@ let helper = new ArrayHelper();
 console.log(helper.isInArray([1, 5, 6], 1, 2)); // false
 console.log(helper.isInArray([1, 5, 6], 1, 5)); // true
 
-console.log(helper.summator(1, 2, 3, 4)); // 10
-console.log(helper.summator(`a`, `b`, `c`)); // abc
+console.log(helper.summator(1, 2, 3, 4, '1')); // 11
 
 console.log(helper.getUnique<string>(`a`, `b`, `b`, `c`, `c`)); // ["a", "b", "c"]
 console.log(helper.getUnique<number>(1, 2, 2, 3, 3)); // [1, 2, 3]
