@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "lib": ["dom", "es5", "es2015.promise"],
+        "noImplicitAny": false,
+        "sourceMap": false,
+        //"watch": true,
+        //"noEmitOnError": true,
+        "strictNullChecks": true,
+        "typeRoots": ["node_modules"],
+        "types": ["lodash"]
+    },
+    "exclude": [
+        "node_modules"
+    ]
+}
