@@ -24,10 +24,9 @@ declare var Request: {
     new (input: string|Request, init?: InitRequest): Request;
 }
 
-
 interface ResponseBody {
-    blob: any;
-    formData: any;
+    blob: Blob;
+    formData: FormData;
 }
 
 interface ResponseInit {
@@ -36,6 +35,7 @@ interface ResponseInit {
 }
 
 interface Response {
+    blob: ()=>Blob;
     json: ()=> any;
     text: ()=>string;
 }
