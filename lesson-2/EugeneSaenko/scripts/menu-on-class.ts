@@ -1,7 +1,14 @@
 type menuList = { title: string, items?: menuList}[];
 type menuOpt = {element: HTMLElement, select: HTMLSelectElement, controls: HTMLDivElement, menuList: menuList}
 
-class Menu {
+interface MenuInt {
+    getElem(): HTMLElement;
+    toggleMenu(elClassList, parentClass): void;
+    openMenu(elClassList, parentClassList): void;
+    closeMenu(elClassList, parentClassList): void;
+}
+
+class Menu implements MenuInt {
     protected _element: HTMLElement;
     protected _select: HTMLSelectElement;
     protected _controls: HTMLDivElement;
@@ -17,7 +24,7 @@ class Menu {
         this._bindEvents();
     }
 
-    public get getElem(): HTMLElement {
+    public getElem(): HTMLElement {
         return this._element;
     }
 
@@ -28,7 +35,7 @@ class Menu {
 
     protected _clickHandler(ev: MouseEvent): void {
         let element = ev.target as HTMLElement;
-        this._toggleMenu(element.classList, element.parentElement.classList);
+        this.toggleMenu(element.classList, element.parentElement.classList);
     }
 
     protected _control(event: MouseEvent): void {
@@ -44,31 +51,31 @@ class Menu {
         if (!elClassList.contains('title')) {
             return;
         }
-        if (action == 'open') {
-            this._openMenu(elClassList, parentClassList);
-        } else if (action == 'close') {
-            this._closeMenu(elClassList, parentClassList);
-        } else if (action == 'toggle') {
-            this._toggleMenu(elClassList, parentClassList)
+        if (action === 'open') {
+            this.openMenu(elClassList, parentClassList);
+        } else if (action === 'close') {
+            this.closeMenu(elClassList, parentClassList);
+        } else if (action === 'toggle') {
+            this.toggleMenu(elClassList, parentClassList)
         }
     }
 
-    protected _toggleMenu(elClassList, parentClass): void {
+    public toggleMenu(elClassList, parentClass): void {
         if (parentClass.contains('menu-open')) {
-            this._closeMenu(elClassList, parentClass)
+            this.closeMenu(elClassList, parentClass)
         } else {
-            this._openMenu(elClassList, parentClass);
+            this.openMenu(elClassList, parentClass);
         }
     }
 
-    protected _openMenu(elClassList, parentClassList): void {
+    public openMenu(elClassList, parentClassList): void {
         if (!elClassList.contains('title')) {
             return;
         }
         parentClassList.add('menu-open')
     }
 
-    protected _closeMenu(elClassList, parentClassList): void {
+    public closeMenu(elClassList, parentClassList): void {
         if (!elClassList.contains('title')) {
             return;
         }
@@ -147,4 +154,4 @@ let controls = document.querySelector('.controls') as HTMLDivElement;
 
 let menuInst = new Menu({element, select, controls, menuList});
 
-console.log(menuInst.getElem);
+console.log(menuInst.getElem());
