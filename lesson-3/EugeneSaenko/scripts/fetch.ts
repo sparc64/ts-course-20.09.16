@@ -91,7 +91,10 @@ class FlikrApp {
         for (let photo of this.photos) {
             content += `<div class="image-box">
 <img src="https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg">
-        <p>${photo.title}</p></div>`
+        <p>${photo.title}</p><p>${this.getOwnerName(photo.owner, this).then(function (data) {
+            console.log(data['person'].username._content);
+            return data['person'].username._content;
+            })}</p></div>`
         }
         this.imagesBox.innerHTML = content;
     }
@@ -110,6 +113,26 @@ class FlikrApp {
         fetch(input)
             .then((res: Response): PromiseLike<any> => res.json())
             .then(cb)
+    }
+
+    protected getOwnerName(owner, self) {
+        return new Promise(function(resolve, reject) {
+            let http = new XMLHttpRequest();
+
+            http.open(`GET`, `${self.uri}method=flickr.people.getInfo&api_key=${self.apiKey}&user_id=${owner}&format=json&nojsoncallback=1`, true);
+            http.onload = function () {
+                if (http.status === 200) {
+                    // console.log(JSON.parse(http.response));
+                    resolve(JSON.parse(http.response))
+                } else {
+                    reject(http.statusText)
+                }
+            };
+            http.onerror = function () {
+                reject(http.statusText)
+            };
+            http.send();
+        })
     }
 
 
