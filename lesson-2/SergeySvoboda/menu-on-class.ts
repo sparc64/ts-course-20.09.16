@@ -76,52 +76,64 @@ function getUnique<T>(...values: T[]): T[] {
 
 // 4)
 
-function complexReverse(str: string): string {
-    let words: string[] = str.split(' ');
-    let result: string[] = [];
-
+function revertSentence(str: string): string {
+    return str
+            .split(' ')
+            .map( (word) => revertWord(word) )
+            .join(' ');
+/*
     for (let w of words) {
-        result.push( reverseTheWord(w) );
+        result.push( revertWord(w) );
     }
     return result.join(' ')
+*/
 
     // helper functions
-    function reverseTheWord(str: string): string {
+    function revertWord(str: string): string {
         let letters: string[] = str.split('');
         let result: string[] = [];
 
         let i: number = 0;
-        let j: number = letters.length;
+        let j: number = letters.length-1;
 
-        while (i < j) {
+        while (i <= j) {
             let left: string = letters[i];
             let right: string = letters[j];
 
             if ( !isLetter(left) ) {
+                result[i] = left;
                 i++;
                 continue;
             }
             if ( !isLetter(right) ) {
+                result[j] = right;
                 j--;
                 continue;
             }
 
             result[i] = right;
             result[j] = left;
+
+            i++;
+            j--;
         }
 
         return result.join('');
     }
 
     function isLetter(l: string): boolean {
+        const A_LETTER_CODE: number = 97;
+        const Z_LETTER_CODE: number = 122;
 
+        let code = l.toLowerCase().charCodeAt(0);
+        return code >= A_LETTER_CODE && code <= Z_LETTER_CODE;
     }
 
 }
 
 
 // let s1 = 's1tar3t 2 hellow';
-// let s2 = 's1ta$%r3t 2 hel^low';
+// let s2 = 's1ta$?r3t 2 hel^low';
 // let s3 = 's1tar3t 2   low5';
 // console.log(s1, ' -> ', revertSentence(s1));
 // console.log(s2, ' -> ', revertSentence(s2));
@@ -138,6 +150,22 @@ type menuOpt = {element: HTMLElement,menuList: menuList};
 class Menu {
     protected _element: HTMLElement;
     protected _menuList: menuList;
+
+    public get elem(): HTMLElement {
+        return this._element;
+    }
+
+    public toggle() {
+
+    }
+
+    public close() {
+
+    }
+
+    public open() {
+
+    }
 
     public constructor(opt: menuOpt) {
         this._element = opt.element;
@@ -218,3 +246,4 @@ let menuList: menuList = [
 let element = document.querySelector('.menu') as HTMLElement;
 
 let menuInst = new Menu({element, menuList});
+console.log(menuInst.elem );
