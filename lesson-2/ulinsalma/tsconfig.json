@@ -4,11 +4,7 @@
         "target": "es5",
         "noImplicitAny": false,
         "sourceMap": false,
-        //"watch": true,
-        //"noEmitOnError": true,
-        "strictNullChecks": true
+        "newLine": "LF"
     },
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": ["node_modules"]
 }
