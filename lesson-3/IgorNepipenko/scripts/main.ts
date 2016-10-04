@@ -1,5 +1,6 @@
 /// <reference path="./fetch.d.ts" />
 import {FlikrAppAsModuleHomework} from './flikr';
+
 import config = require('./config');
 import fetch = require('./fetchEvent');
 

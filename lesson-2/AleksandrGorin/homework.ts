@@ -1,7 +1,7 @@
-function isInArray<T>(list:T[], ...args: T[]):boolean {
-    let result:boolean = true;
+function isInArray<T>(list: T[], ...args: T[]): boolean {
+    let result: boolean = true;
 
-    args.forEach((elem:T) => {
+    args.forEach((elem: T) => {
         if (list.indexOf(elem) == -1) {
             result = false;
         }
@@ -10,43 +10,48 @@ function isInArray<T>(list:T[], ...args: T[]):boolean {
     return result;
 }
 
-console.log(isInArray<number>([1,2,3], 1,2,3)); // true
-console.log(isInArray<number|string>([1,2,3], 1,2,'a')); // false
+console.log(isInArray<number>([1, 2, 3], 1, 2, 3)); // true
+console.log(isInArray<number|string>([1, 2, 3], 1, 2, 'a')); // false
 
-function isNumber(num:string|number):num is number {
-    if(typeof num === 'number') {
+function isNumber(num: string|number): num is number {
+    if (typeof num === 'number') {
         return true;
     }
     return false
 }
 
-function summator(...numbers: Array<string|number>):number {
-    let result:number = 0;
+function summator(...numbers: Array<string|number>): number {
+    let result: number = 0;
 
     numbers.forEach((number) => {
-        if (!isNumber(number))
-        {
+        if (typeof number === 'number') {
+            // return true;
+            // здесь я число
+            result += number;
+        }
+        if(typeof number === 'string'){
             number = parseInt(number, 10);
         }
+        //if (!isNumber(number))
+        // {
 
-        result += number;
+        //}
+
+
     });
 
     return result;
 }
 
-console.log(summator(1,3,5)); // 9
-console.log(summator(1,'a',5)); // NaN
+console.log(summator(1, 3, 5)); // 9
+console.log(summator(1, 'a', 5)); // NaN
 
 
+function getUnique<T>(...elems: T[]): T[] {
+    let result: T[] = [];
 
-function getUnique<T>(...elems:T[]):T[]
-{
-    let result:T[] = [];
-
-    elems.forEach((elem:T) => {
-        if(result.indexOf(elem) === -1)
-        {
+    elems.forEach((elem: T) => {
+        if (result.indexOf(elem) === -1) {
             result.push(elem);
         }
     });
@@ -54,29 +59,25 @@ function getUnique<T>(...elems:T[]):T[]
     return result;
 }
 
-console.log(getUnique<number>(1,1,1,4,4,2,5)); // [1, 4, 2, 5]
-console.log(getUnique<string|number>('a','b', 1,'a', 'a','c','b')); // ["a", "b", 1, "c"]
+console.log(getUnique<number>(1, 1, 1, 4, 4, 2, 5)); // [1, 4, 2, 5]
+console.log(getUnique<string|number>('a', 'b', 1, 'a', 'a', 'c', 'b')); // ["a", "b", 1, "c"]
 
 
-function wordReverser(words:string):string
-{
-    let result:string = '';
-    let wordsArr:string[] = words.split(' ');
-    let finalWordsArr:string[] = [];
+function wordReverser(words: string): string {
+    let result: string = '';
+    let wordsArr: string[] = words.split(' ');
+    let finalWordsArr: string[] = [];
 
     wordsArr.forEach((word) => {
         let regExp = /[^a-zA-Z]/g; // не понятно, какой тип у переменной с регулярным выражением можно поставить
         let wordLetter: Array<string> = word.replace(regExp, '').split('').reverse();
         let finalWordArray: Array<string> = [];
 
-        for (let i:number=0; i < word.length; i++)
-        {
-            if(regExp.test(word[i]))
-            {
+        for (let i: number = 0; i < word.length; i++) {
+            if (regExp.test(word[i])) {
                 finalWordArray[i] = word[i];
             }
-            else
-            {
+            else {
                 finalWordArray[i] = wordLetter.shift() as string;
             }
         }

@@ -8,7 +8,8 @@
         //"noEmitOnError": true,
         "strictNullChecks": true,
         "typeRoots": ["node_modules"],
-        "types": ["lodash"]
+        "types": ["lodash"],
+        "experimentalDecorators": true
     },
     "exclude": [
         "node_modules"

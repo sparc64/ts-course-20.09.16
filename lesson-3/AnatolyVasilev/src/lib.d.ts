@@ -17,8 +17,8 @@ declare var Request: {
 
 
 interface ResponseBody {
-    blob: any;
-    formData: any;
+    blob: Blob;
+    formData: FormData;
 }
 
 interface ResponseInit {
