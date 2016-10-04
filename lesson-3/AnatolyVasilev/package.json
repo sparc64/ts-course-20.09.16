@@ -1,0 +1,26 @@
+{
+  "name": "anatolyvasilev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/lodash": "^4.14.36",
+    "css-loader": "^0.25.0",
+    "file-loader": "^0.9.0",
+    "html-loader": "^0.4.4",
+    "html-webpack-plugin": "^2.22.0",
+    "lodash": "^4.16.2",
+    "style-loader": "^0.13.1",
+    "systemjs": "^0.19.39",
+    "ts-loader": "^0.8.2",
+    "typescript": "^2.0.3",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "whatwg-fetch": "^1.0.0"
+  }
+}
