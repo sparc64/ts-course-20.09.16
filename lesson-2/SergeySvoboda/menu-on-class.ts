@@ -143,11 +143,19 @@ function revertSentence(str: string): string {
 
 
 type menuList = { title: string, items?: menuList}[];
-
 type menuOpt = {element: HTMLElement,menuList: menuList};
 
+type liElemCollecton = HTMLLIElement|HTMLLIElement[]|NodeListOf<HTMLLIElement>;
 
-class Menu {
+interface IMenu {
+    get?(): HTMLElement;
+    toggle(liElem: liElemCollecton): void;
+    close(liElem: liElemCollecton): void;
+    open(liElem: liElemCollecton): void;
+}
+
+
+class Menu implements IMenu {
     protected _element: HTMLElement;
     protected _menuList: menuList;
 
@@ -155,23 +163,54 @@ class Menu {
         return this._element;
     }
 
-    public toggle() {
-
+    public toggle(liElems: liElemCollecton):void {
+        if (this._isSingleLiElement(liElems)) {
+            liElems = [liElems];
+        }
+        for(let i = 0; i < liElems.length; i++) {
+            this._toggleMenu(liElems[i]);
+        }
     }
 
-    public close() {
-
+    public close(liElems: liElemCollecton):void {
+        if (this._isSingleLiElement(liElems)) {
+            liElems = [liElems];
+        }
+        for(let i = 0; i < liElems.length; i++) {
+            this._closeMenu(liElems[i]);
+        }
     }
 
-    public open() {
+    public open(liElems: liElemCollecton):void {
+        if (this._isSingleLiElement(liElems)) {
+            liElems = [liElems];
+        }
+        for(let i = 0; i < liElems.length; i++) {
+            this._openMenu(liElems[i]);
+        }
+    }
 
+    protected _isSingleLiElement(e):e is HTMLLIElement {
+       return !e.length;
     }
 
     public constructor(opt: menuOpt) {
         this._element = opt.element;
         this._menuList = opt.menuList;
         this._element.innerHTML = this._generateMenu(this._menuList);
-        this._element.addEventListener('click', this._clickHandler)
+        this._element.addEventListener('click', this._clickHandler.bind(this) )
+    }
+
+    protected _openMenu(elem: HTMLLIElement):void {
+        elem.classList.add('menu-open');
+    }
+
+    protected _closeMenu(elem: HTMLLIElement):void {
+        elem.classList.remove('menu-open');
+    }
+
+    protected _toggleMenu(elem: HTMLLIElement):void {
+        elem.classList.toggle('menu-open');
     }
 
     protected _clickHandler(ev: MouseEvent): void {
@@ -180,25 +219,25 @@ class Menu {
         if (!classList.contains('title')) {
             return;
         }
-        let parentLi = element.parentNode as HTMLLIElement;
-        parentLi.classList.toggle('menu-open')
+
+        this._toggleMenu(element.parentNode as HTMLLIElement);
+
+/*        let parentLi = element.parentNode as HTMLLIElement;
+        parentLi.classList.toggle('menu-open');*/
     }
 
-    protected _generateMenu(menuList: menuList): string {
-        let z: string = `<ul>`;
-        for (let a of menuList) {
-            z += `<li><a ${a.items ? 'class=title': ''}>${a.title}</a>`;
-            if (!a.items) {
-                z += `</li>`
+    protected _generateMenu(list: menuList): string {
+        let str: string = `<ul>`;
+        for (let a of list) {
+            if (a.items) {
+                str += `<li class="sub-menu"><a class="title">${a.title}</a>${this._generateMenu(a.items)}</li>`;
                 continue;
             }
-            z += `${this._generateMenu(a.items)}</li>`
+            str += `<li class="sub-menu"><a>${a.title}</a></li>`;
         }
-        z += `</ul>`;
-        return z
+        return (str += `</ul>`);
     }
 }
-
 
 let menuList: menuList = [
     {
@@ -244,6 +283,20 @@ let menuList: menuList = [
 ];
 
 let element = document.querySelector('.menu') as HTMLElement;
-
 let menuInst = new Menu({element, menuList});
-console.log(menuInst.elem );
+
+let openMenuButton = document.getElementById('open-menu') as HTMLButtonElement;
+let closeMenuButton = document.getElementById('close-menu') as HTMLButtonElement;
+let toggleMenuButton = document.getElementById('toggle-menu') as HTMLButtonElement;
+
+let allMenuLiElems: NodeListOf<HTMLLIElement> = menuInst.elem.getElementsByTagName('li');
+
+openMenuButton.addEventListener('click', ():void => {
+   menuInst.open(allMenuLiElems);
+});
+closeMenuButton.addEventListener('click', ():void => {
+   menuInst.close(allMenuLiElems);
+});
+toggleMenuButton.addEventListener('click', ():void => {
+   menuInst.toggle(allMenuLiElems);
+});
